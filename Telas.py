@@ -1,107 +1,110 @@
-from xml.dom.minidom import Element
 import PySimpleGUI as sg
 import Img_Maos
-import random
-
-p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez = 0, 0, 0, 0, 1, 0
-p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel = True, True, True, True
-p1m_dedo_mao_esquerda, p1m_dedo_mao_direita, p2m_dedo_mao_esquerda, p2m_dedo_mao_direita, p1_vencedor, p2_vencedor, pontos = False, False, False, False, False, False, 0
+import Img_Maos, random #IMPORTANDO ALGUMAS BIBLIOTECAS/OUTROS ARQUIVOS
 
 
-def vencedor():
-    global pontos
-    c = 1
-    try:
-        jogadores = open("rank.txt", "r")
-        for linha in jogadores:
-            if jogador1+'\n' == linha:
+p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez = 0, 0, 0, 0, 1, 0 #DECLARAÇÃO DE VARIÁVEIS A SER UTILIZADOS NO CÓDIGO
+p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel = True, True, True, True #DECLARAÇÃO DE VARIÁVEIS A SER UTILIZADOS NO CÓDIGO
+p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_direita, p1_vencedor, p2_vencedor = False, False, False, False, False, False #DECLARAÇÃO DE VARIÁVEIS A SER UTILIZADOS NO CÓDIGO
 
-                jogadores.close()
-            c += 1
-    except:
-        if p1_vencedor == True:
-            jogadores = open("rank.txt", "a")
-            pontos += 1
-            jogadores.writelines([str(jogador1) + "\n" + str(pontos)])
-            jogadores.close()
+def p1_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 1 VENCE O JOGO
+    sg.theme('Dark Blue 3')
 
+    p1_layout_tela_vencedor = [[(sg.Text('Vencedor', size=(15,1),justification='c', font='Arial 50'))], #LAYOUT DA TELA DO VENCEDOR
+                   [(sg.Text('{}'.format(jogador1), size=(15,1), justification='c', font='Arial 50'))],
+                   [(sg.Text('', size=[15, 12]))],
+                   [sg.Button('Voltar Ao Menu', border_width='3', size=(20,7)), sg.Button('Sair', border_width='3', size=(20,7))]]
+    p1_tela_vencedor = sg.Window('Jogador Vencedor',p1_layout_tela_vencedor, element_justification='c', size=(500,500), location = (350,0)) #FAZENDO A TELA ABRIR
 
-def janela_dois_jogadores():
+    while True:
+        event, values = p1_tela_vencedor.read() #PEGANDO OS EVENTOS E VALORES COLOCADOS NA TELA
+        if event == sg.WIN_CLOSED or event == 'Sair': #CONDIÇÃO ONDE SE O USUARIO CLICAR EM "FECHAR" OU NO BOTÃO "SAIR" ACONTECE TAL SITUAÇÃO
+            p1_tela_vencedor.close() #FECHAR A JANELA CASO ESSE EVENTO SEJA OCORRIDO
+            break
+        elif event == 'Voltar Ao Menu':
+            p1_tela_vencedor.close()
+            tela_principal() #VOLTA NA TELA PRINCIPAL
 
-    global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel, p1m_dedo_mao_esquerda, p1m_dedo_mao_direita, p2m_dedo_mao_esquerda, p2m_dedo_mao_direita, nome_jogador1, nome_jogador2
+def p2_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 2 VENCE O JOGO
+    sg.theme('Dark Blue 3')
+
+    p2_layout_tela_vencedor = [[(sg.Text('Vencedor', size=(15,1), justification='c', font='Arial 50'))],
+                   [(sg.Text('{}'.format(jogador2), size=(15,1), justification='c', font='Arial 50'))],
+                   [(sg.Text('', size=[15, 12]))],
+                   [sg.Button('Voltar Ao Menu', border_width='3', size=(20,7)), sg.Button('Sair', border_width='3', size=(20,7))]]
+    p2_tela_vencedor = sg.Window('Jogador Vencedor', p2_layout_tela_vencedor, element_justification='c', size=(500,500), location = (350,0))
+
+    while True:
+        event, values = p2_tela_vencedor.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
+            p2_tela_vencedor.close()
+            break
+        elif event == 'Voltar Ao Menu':
+            p2_tela_vencedor.close()
+            tela_principal()
+
+def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM DOIS JOGADORES NO MENU PRINCIPAL
+
+    global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel, p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_direita 
 
     sg.theme('bluemono')
 
-    # IMAGEM DAS MÃOS PLAYER 1
-    if p1_mao_direita_g == 0: #g = global
+    if p1_mao_direita_g == 0: #CONDIÇÕES PARA FAZER ALTERAÇÃO DA IMAGEM DAS MÃOS NA TELA DO JOGO
         p1_img_mao_d = Img_Maos.mao0
     if p1_mao_esquerda_g == 0:
         p1_img_mao_e = Img_Maos.mao0
-
     if p1_mao_direita_g == 1:
         p1_img_mao_d = Img_Maos.mao1
     if p1_mao_esquerda_g == 1:
         p1_img_mao_e = Img_Maos.mao1
-
     if p1_mao_direita_g == 2:
         p1_img_mao_d = Img_Maos.mao2
     if p1_mao_esquerda_g == 2:
         p1_img_mao_e = Img_Maos.mao2
-
     if p1_mao_direita_g == 3:
         p1_img_mao_d = Img_Maos.mao3
     if p1_mao_esquerda_g == 3:
         p1_img_mao_e = Img_Maos.mao3
-
     if p1_mao_direita_g == 4:
         p1_img_mao_d = Img_Maos.mao4
     if p1_mao_esquerda_g == 4:
         p1_img_mao_e = Img_Maos.mao4
-
     if p1_mao_direita_g == 5:
         p1_img_mao_d = Img_Maos.mao5
     if p1_mao_esquerda_g == 5:
         p1_img_mao_e = Img_Maos.mao5
-
-    # IMAGEM DAS MÃOS PLAYER 2
     if p2_mao_direita_g == 0:
         p2_img_mao_d = Img_Maos.mao0
     if p2_mao_esquerda_g == 0:
         p2_img_mao_e = Img_Maos.mao0
-
     if p2_mao_direita_g == 1:
         p2_img_mao_d = Img_Maos.mao1
     if p2_mao_esquerda_g == 1:
         p2_img_mao_e = Img_Maos.mao1
-
     if p2_mao_direita_g == 2:
         p2_img_mao_d = Img_Maos.mao2
     if p2_mao_esquerda_g == 2:
         p2_img_mao_e = Img_Maos.mao2
-
     if p2_mao_direita_g == 3:
         p2_img_mao_d = Img_Maos.mao3
     if p2_mao_esquerda_g == 3:
         p2_img_mao_e = Img_Maos.mao3
-
     if p2_mao_direita_g == 4:
         p2_img_mao_d = Img_Maos.mao4
     if p2_mao_esquerda_g == 4:
         p2_img_mao_e = Img_Maos.mao4
-
     if p2_mao_direita_g == 5:
         p2_img_mao_d = Img_Maos.mao5
     if p2_mao_esquerda_g == 5:
         p2_img_mao_e = Img_Maos.mao5
 
-    # Contagem para vez de cada jogador 
-    if vez_jogador == 1:
-        p1_vez_jogador_nao_jogar = False
+    global p1_nome_visivel, p2_nome_visivel
+
+    if vez_jogador == 1: #CONDIÇÃO SOBRE QUEM VAI SER A VEZ DE JOGAR, NESTA CONDIÇÃO VAI SER O JOGADOR 1
+        p1_nome_visivel = True #VARIÁVEL PARA COLOCAR SE O NOME VAI FICAR INVISIVEL PARA DETERMINAR QUEM VAI SER A VEZ DE JGOAR
+        p2_nome_visivel = False 
+        p1_vez_jogador_nao_jogar = False #VARIAVEL PARA O BOTAO DA MAO FICAR HABILITADO OU DESABILITADO
         p2_vez_jogador_nao_jogar = True
-
-
-
-    
         if contador_vez == 1:
             p1_vez_jogador_nao_jogar = True
             p2_vez_jogador_nao_jogar = False
@@ -109,9 +112,10 @@ def janela_dois_jogadores():
         if contador_vez == 2:
             vez_jogador = 2
             contador_vez = 0
-
-    elif vez_jogador == 2:
-        p1_vez_jogador_nao_jogar = True
+    elif vez_jogador == 2: #CONDIÇÃO SOBRE QUEM VAI SER A VEZ DE JOGAR, NESTA CONDIÇÃO VAI SER O JOGADOR 2
+        p1_nome_visivel = False #VARIÁVEL PARA COLOCAR SE O NOME VAI FICAR INVISIVEL PARA DETERMINAR QUEM VAI SER A VEZ DE JGOAR
+        p2_nome_visivel = True
+        p1_vez_jogador_nao_jogar = True #VARIAVEL PARA O BOTAO DA MAO FICAR HABILITADO OU DESABILITADO
         p2_vez_jogador_nao_jogar = False
         if contador_vez == 1:
             p1_vez_jogador_nao_jogar = False
@@ -121,8 +125,7 @@ def janela_dois_jogadores():
             vez_jogador = 1
             contador_vez = 0
 
-    # Posicionamento do quadrado das Mãos
-    if p2_mao_esquerda_g == 1:
+    if p2_mao_esquerda_g == 1: #CONDIÇÕES PARA AJUSTAR A LARGURA E ALTURA DO BOTAO DE ACORDO COM A IMAGEM A SER COLOCADA
         p2_me_altura = 170
         p2_me_largura = 140
         esp_meio = 1
@@ -209,71 +212,67 @@ def janela_dois_jogadores():
         p2_md_largura = 245
         esp_meio = 1
         esp_alto = 1
-
-    layout_dois_jogador = [[(sg.Text('', size=[40, esp_alto]))],
-                           [(sg.Text('{}'.format(jogador2),visible = p1_vez_jogador_nao_jogar, size=[31, 0],
-                             justification='r', font='ARIAL 16'))],
-                           [sg.Button('', visible=p2_mao_esquerda_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
+    
+    layout_dois_jogador = [[(sg.Text('', size=[40, esp_alto]))], #LAYOUT DA TELA DE DOIS JOGADORES
+                            [(sg.Text('Vez de: {}'.format(jogador2),visible=p2_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
+                           [sg.Button('',visible=p2_mao_esquerda_visivel ,disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
                             (sg.Text('', size=[20, 0])),
-                            sg.Button('', visible=p2_mao_direita_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_md_largura, p2_md_altura), border_width=0, key='-p2_md-')],
+                            sg.Button('',visible=p2_mao_direita_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_md_largura, p2_md_altura), border_width=0, key='-p2_md-')],
                            [(sg.Text('', size=[40, esp_meio]))],
-                           [sg.Button('', visible=p1_mao_esquerda_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_me_largura, p1_me_altura), border_width=0, key='-p1_me-'),
+                           [sg.Button('',visible=p1_mao_esquerda_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_me_largura, p1_me_altura), border_width=0, key='-p1_me-'),
                             (sg.Text('', size=[20, 0])),
-                            sg.Button('', visible=p1_mao_direita_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_md_largura, p1_md_altura), border_width=0, key='-p1_md-')],
-                           [(sg.Text('{}'.format(jogador1),visible = p2_vez_jogador_nao_jogar ,size=[31, 0],
-                             justification='r', font='ARIAL 16'))],
+                            sg.Button('',visible=p1_mao_direita_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_md_largura, p1_md_altura), border_width=0, key='-p1_md-')],
+                            [(sg.Text('Vez de: {}'.format(jogador1),visible=p1_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
                            [(sg.Text('', size=[40, esp_alto]))]]
 
     layout = [[sg.Column(layout_dois_jogador, justification='c')]]
 
-    tela_dois_jogadores = sg.Window(
-        'Game', layout, size=(800, 900), location=(350, 0))
+    tela_dois_jogadores = sg.Window('Dois Jogadores', layout, size=(800, 900), location = (350,0))
+
     global contador_jogar, p1_vencedor, p2_vencedor
-    while True: # Fechar quando algum dos jogadores deixar as 2 mãos do adversário desabilitadas
-        if p1_mao_esquerda_visivel == False and p1_mao_direita_visivel == False:
+
+    while True: #LAÇO DE REPETIÇÃO SOBRE OS EVENTOS
+
+        if p1_mao_esquerda_visivel == False and p1_mao_direita_visivel == False: #CONDIÇÃO CASO AS DUAS MÃOS DO PLAYER 1 ESTIVEREM DESATIVADAS  
             tela_dois_jogadores.close()
-            p1_vencedor = True
-            vencedor()
+            p2_vencedor() #ABRE A TELA DO JOGADOR 2 QUE VAI SER O VENCEDOR
         elif p2_mao_esquerda_visivel == False and p2_mao_direita_visivel == False:
             tela_dois_jogadores.close()
-            p2_vencedor = True
-            vencedor()
+            p1_vencedor()
         event, values = tela_dois_jogadores.read()
 
-        if event == sg.WIN_CLOSED or event == 'Sair':
+        if event == sg.WIN_CLOSED:
             break
 
-
-        if comeco_jogador == 1: # começo_jogador = vez_jogador porque essa variável atribui a vez do jogador de forma que ela não altere o valor contido nela
-            contador_jogar += 1
+        if comeco_jogador == 1: #SE QUEM COMEÇAR É O JOGADOR 1 VAI ENTRAR NESSA CONDIÇÃO
+            contador_jogar += 1 #CONTADOR PARA ALTERNAR A VEZ DA MAO CLICADA
             if contador_jogar <= 2:
                 global p1_mao_esquerda_clicked, p1_mao_direita_clicked, menos_um_dedo
+                if event == '-p1_me-':
+                    p1_mao_esquerda_clicked = True
+                    tela_dois_jogadores.close()
+                    janela_dois_jogadores()
 
-                if event == '-p1_me-': #mão esquerda do player 1 -- Se o usuário clicar na mão esquerda do player 1, a mão esquerda vai atribuir como True
-                    p1_mao_esquerda_clicked = True 
-                    tela_dois_jogadores.close() #fecha pra tela recarregar
-                    janela_dois_jogadores() #chama a função para voltar pra tela carregada
-
-                if event == '-p2_me-' and p1_mao_esquerda_clicked == True: # p1 mao clicked é quando a mão já está selecionada
+                if event == '-p2_me-' and p1_mao_esquerda_clicked == True:
                     p2_mao_esquerda_g += p1_mao_esquerda_g
                     if p1_mao_esquerda_g == 0:
-                        p2_mao_esquerda_g += 1
+                        p2_mao_esquerda_g+=1
                     if p2_mao_esquerda_g == 5:
-                        p2_mao_esquerda_visivel = False #vai se tornar invisível
+                        p2_mao_esquerda_visivel = False
                     elif p2_mao_esquerda_g > 5:
-                        p2_mao_esquerda_g -= 5
+                        p2_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
-                    p1_mao_esquerda_clicked = False # pra não entrar nessa função de novo
+                    p1_mao_esquerda_clicked = False
                     janela_dois_jogadores()
 
                 if event == '-p2_md-' and p1_mao_esquerda_clicked == True:
                     p2_mao_direita_g += p1_mao_esquerda_g
                     if p1_mao_esquerda_g == 0:
-                        p2_mao_direita_g += 1
+                        p2_mao_direita_g+=1
                     if p2_mao_direita_g == 5:
                         p2_mao_direita_visivel = False
                     elif p2_mao_direita_g > 5:
-                        p2_mao_direita_g -= 5
+                        p2_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -286,11 +285,11 @@ def janela_dois_jogadores():
                 if event == '-p2_me-' and p1_mao_direita_clicked == True:
                     p2_mao_esquerda_g += p1_mao_direita_g
                     if p1_mao_direita_g == 0:
-                        p2_mao_esquerda_g += 1
+                        p2_mao_esquerda_g+=1
                     if p2_mao_esquerda_g == 5:
                         p2_mao_esquerda_visivel = False
                     elif p2_mao_esquerda_g > 5:
-                        p2_mao_esquerda_g -= 5
+                        p2_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_direita_clicked = False
                     janela_dois_jogadores()
@@ -298,15 +297,15 @@ def janela_dois_jogadores():
                 if event == '-p2_md-' and p1_mao_direita_clicked == True:
                     p2_mao_direita_g += p1_mao_direita_g
                     if p1_mao_direita_g == 0:
-                        p2_mao_direita_g += 1
+                        p2_mao_direita_g+=1
                     if p2_mao_direita_g == 5:
                         p2_mao_direita_visivel = False
                     elif p2_mao_direita_g > 5:
-                        p2_mao_direita_g -= 5
+                        p2_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_direita_clicked = False
                     janela_dois_jogadores()
-
+                
             elif contador_jogar >= 3 and contador_jogar <= 4:
                 if contador_jogar == 4:
                     contador_jogar = 0
@@ -319,11 +318,11 @@ def janela_dois_jogadores():
                 if event == '-p1_me-' and p2_mao_esquerda_clicked == True:
                     p1_mao_esquerda_g += p2_mao_esquerda_g
                     if p2_mao_esquerda_g == 0:
-                        p1_mao_esquerda_g += 1
+                        p1_mao_esquerda_g+=1
                     if p1_mao_esquerda_g == 5:
                         p1_mao_esquerda_visivel = False
                     elif p1_mao_esquerda_g > 5:
-                        p1_mao_esquerda_g -= 5
+                        p1_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -331,11 +330,11 @@ def janela_dois_jogadores():
                 if event == '-p1_md-' and p2_mao_esquerda_clicked == True:
                     p1_mao_direita_g += p2_mao_esquerda_g
                     if p2_mao_esquerda_g == 0:
-                        p1_mao_direita_g += 1
+                        p1_mao_direita_g+=1
                     if p1_mao_direita_g == 5:
                         p1_mao_direita_visivel = False
                     elif p1_mao_direita_g > 5:
-                        p1_mao_direita_g -= 5
+                        p1_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -348,11 +347,11 @@ def janela_dois_jogadores():
                 if event == '-p1_me-' and p2_mao_direita_clicked == True:
                     p1_mao_esquerda_g += p2_mao_direita_g
                     if p2_mao_direita_g == 0:
-                        p1_mao_esquerda_g += 1
+                        p1_mao_esquerda_g+=1
                     if p1_mao_esquerda_g == 5:
                         p1_mao_esquerda_visivel = False
                     elif p1_mao_esquerda_g > 5:
-                        p1_mao_esquerda_g -= 5
+                        p1_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_direita_clicked = False
                     janela_dois_jogadores()
@@ -360,11 +359,11 @@ def janela_dois_jogadores():
                 if event == '-p1_md-' and p2_mao_direita_clicked == True:
                     p1_mao_direita_g += p2_mao_direita_g
                     if p2_mao_direita_g == 0:
-                        p1_mao_direita_g += 1
+                        p1_mao_direita_g+=1
                     if p1_mao_direita_g == 5:
                         p1_mao_direita_visivel = False
                     elif p1_mao_direita_g > 5:
-                        p1_mao_direita_g -= 5
+                        p1_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_direita_clicked = False
                     janela_dois_jogadores()
@@ -379,11 +378,11 @@ def janela_dois_jogadores():
                 if event == '-p1_me-' and p2_mao_esquerda_clicked == True:
                     p1_mao_esquerda_g += p2_mao_esquerda_g
                     if p2_mao_esquerda_g == 0:
-                        p1_mao_esquerda_g += 1
+                        p1_mao_esquerda_g+=1
                     if p1_mao_esquerda_g == 5:
                         p1_mao_esquerda_visivel = False
                     elif p1_mao_esquerda_g > 5:
-                        p1_mao_esquerda_g -= 5
+                        p1_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -391,11 +390,11 @@ def janela_dois_jogadores():
                 if event == '-p1_md-' and p2_mao_esquerda_clicked == True:
                     p1_mao_direita_g += p2_mao_esquerda_g
                     if p2_mao_esquerda_g == 0:
-                        p1_mao_direita_g += 1
+                        p1_mao_direita_g+=1
                     if p1_mao_direita_g == 5:
                         p1_mao_direita_visivel = False
                     elif p1_mao_direita_g > 5:
-                        p1_mao_direita_g -= 5
+                        p1_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -408,11 +407,11 @@ def janela_dois_jogadores():
                 if event == '-p1_me-' and p2_mao_direita_clicked == True:
                     p1_mao_esquerda_g += p2_mao_direita_g
                     if p2_mao_direita_g == 0:
-                        p1_mao_esquerda_g += 1
+                        p1_mao_esquerda_g+=1
                     if p1_mao_esquerda_g == 5:
                         p1_mao_esquerda_visivel = False
                     elif p1_mao_esquerda_g > 5:
-                        p1_mao_esquerda_g -= 5
+                        p1_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_direita_clicked = False
                     janela_dois_jogadores()
@@ -420,15 +419,15 @@ def janela_dois_jogadores():
                 if event == '-p1_md-' and p2_mao_direita_clicked == True:
                     p1_mao_direita_g += p2_mao_direita_g
                     if p2_mao_direita_g == 0:
-                        p1_mao_direita_g += 1
+                        p1_mao_direita_g+=1
                     if p1_mao_direita_g == 5:
                         p1_mao_direita_visivel = False
                     elif p1_mao_direita_g > 5:
-                        p1_mao_direita_g -= 5
+                        p1_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p2_mao_direita_clicked = False
                     janela_dois_jogadores()
-
+                
             elif contador_jogar >= 3 and contador_jogar <= 4:
                 if contador_jogar == 4:
                     contador_jogar = 0
@@ -440,11 +439,11 @@ def janela_dois_jogadores():
                 if event == '-p2_me-' and p1_mao_esquerda_clicked == True:
                     p2_mao_esquerda_g += p1_mao_esquerda_g
                     if p1_mao_esquerda_g == 0:
-                        p2_mao_esquerda_g += 1
+                        p2_mao_esquerda_g+=1
                     if p2_mao_esquerda_g == 5:
                         p2_mao_esquerda_visivel = False
                     elif p2_mao_esquerda_g > 5:
-                        p2_mao_esquerda_g -= 5
+                        p2_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -452,11 +451,11 @@ def janela_dois_jogadores():
                 if event == '-p2_md-' and p1_mao_esquerda_clicked == True:
                     p2_mao_direita_g += p1_mao_esquerda_g
                     if p1_mao_esquerda_g == 0:
-                        p2_mao_direita_g += 1
+                        p2_mao_direita_g+=1
                     if p2_mao_direita_g == 5:
                         p2_mao_direita_visivel = False
                     elif p2_mao_direita_g > 5:
-                        p2_mao_direita_g -= 5
+                        p2_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_esquerda_clicked = False
                     janela_dois_jogadores()
@@ -469,11 +468,11 @@ def janela_dois_jogadores():
                 if event == '-p2_me-' and p1_mao_direita_clicked == True:
                     p2_mao_esquerda_g += p1_mao_direita_g
                     if p1_mao_direita_g == 0:
-                        p2_mao_esquerda_g += 1
+                        p2_mao_esquerda_g+=1
                     if p2_mao_esquerda_g == 5:
                         p2_mao_esquerda_visivel = False
                     elif p2_mao_esquerda_g > 5:
-                        p2_mao_esquerda_g -= 5
+                        p2_mao_esquerda_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_direita_clicked = False
                     janela_dois_jogadores()
@@ -481,11 +480,11 @@ def janela_dois_jogadores():
                 if event == '-p2_md-' and p1_mao_direita_clicked == True:
                     p2_mao_direita_g += p1_mao_direita_g
                     if p1_mao_direita_g == 0:
-                        p2_mao_direita_g += 1
+                        p2_mao_direita_g+=1
                     if p2_mao_direita_g == 5:
                         p2_mao_direita_visivel = False
                     elif p2_mao_direita_g > 5:
-                        p2_mao_direita_g -= 5
+                        p2_mao_direita_g-=5
                     tela_dois_jogadores.close()
                     p1_mao_direita_clicked = False
                     janela_dois_jogadores()
@@ -497,7 +496,7 @@ def nome_jogadores():
     global jogador1, jogador2
     jogador1 = ''
     jogador2 = ''
-    sg.theme('dark blue 3')
+    sg.theme('Dark Blue 3')
 
     layout_nome = [[(sg.Text('Nome dos Jogadores:', justification='c', font='Arial 15'))],
                    [(sg.Text('Jogador 1:')), sg.InputText()],
@@ -517,7 +516,6 @@ def nome_jogadores():
             jogador1 = values[0]
             jogador2 = values[1]
             janela_dois_jogadores()
-
 
 def janela_regras():
     sg.theme('dark blue 3')
@@ -547,38 +545,30 @@ def janela_regras():
 
     tela_regras.close()
 
-
 def tela_principal():
     global p1_mao_esquerda_clicked, p1_mao_direita_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, vez_jogador, comeco_jogador, contador_jogar, menos_um_dedo
     p1_mao_direita_clicked, p1_mao_esquerda_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, contador_jogar, menos_um_dedo = False, False, False, False, 0, False
-    vez_jogador = random.randint(1, 2) # Para escolher qual jogador vai começar
+    vez_jogador = random.randint(1, 2)
     comeco_jogador = vez_jogador
 
-    sg.theme('dark blue 3')
+    sg.theme('Dark Blue 3')
 
-        # ------------- BOTÕES DA TELA INICIAL -------------
-    layout_menu = [[(sg.Text('Jogo das Mãos', size=[60, 1], justification='c', font='courier 65'))],
+    layout_menu = [[(sg.Text('Jogo das Mãos', size=[40, 1], justification='c',font='courier 65'))],
                    [(sg.Text(' ', size=[40, 5]))],
-                   [sg.Button('Dois Jogadores', font='corrier',
-                              size=(50, 5), border_width='8')],  #(largura, espessura) 
-                   [sg.Button('Regras', font='corrier',
-                              size=(50, 5), border_width='8')],
-                   [sg.Button('Sair', font='corrier',
-                              size=(50, 5), border_width='8')]]
+                   [sg.Button('Dois Jogadores', size=(70, 5), border_width='6')],
+                   [sg.Button('Regras', size=(70, 5), border_width='6')],
+                   [sg.Button('Sair', size=(70, 5), border_width='6')]]
     menu_principal = sg.Window(
-        'Joguinho das mãos', layout_menu, element_justification='c', size=(750, 650))
+        'Joguinho das mãos', layout_menu, element_justification='c', size=(750, 550))
 
     while True:
-        event, values = menu_principal.read()   # Manter a tela aberta
-        if event == sg.WIN_CLOSED or event == 'Sair':  # Criando o botão para fechar a janela
+        event, values = menu_principal.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
             break
         elif event == 'Dois Jogadores':
             menu_principal.close()
             nome_jogadores()
             janela_dois_jogadores()
-        elif event == 'Rank':
-            menu_principal.close()
-            janela_rank()
         elif event == 'Regras':
             menu_principal.close()
             janela_regras()
