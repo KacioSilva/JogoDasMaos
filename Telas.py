@@ -28,62 +28,80 @@ def vencedor():
 
 def janela_dois_jogadores():
 
-    global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel, p1m_dedo_mao_esquerda, p1m_dedo_mao_direita, p2m_dedo_mao_esquerda, p2m_dedo_mao_direita
+    global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel, p1m_dedo_mao_esquerda, p1m_dedo_mao_direita, p2m_dedo_mao_esquerda, p2m_dedo_mao_direita, nome_jogador1, nome_jogador2
 
     sg.theme('bluemono')
 
-    if p1_mao_direita_g == 0:
+    # IMAGEM DAS MÃOS PLAYER 1
+    if p1_mao_direita_g == 0: #g = global
         p1_img_mao_d = Img_Maos.mao0
     if p1_mao_esquerda_g == 0:
         p1_img_mao_e = Img_Maos.mao0
+
     if p1_mao_direita_g == 1:
         p1_img_mao_d = Img_Maos.mao1
     if p1_mao_esquerda_g == 1:
         p1_img_mao_e = Img_Maos.mao1
+
     if p1_mao_direita_g == 2:
         p1_img_mao_d = Img_Maos.mao2
     if p1_mao_esquerda_g == 2:
         p1_img_mao_e = Img_Maos.mao2
+
     if p1_mao_direita_g == 3:
         p1_img_mao_d = Img_Maos.mao3
     if p1_mao_esquerda_g == 3:
         p1_img_mao_e = Img_Maos.mao3
+
     if p1_mao_direita_g == 4:
         p1_img_mao_d = Img_Maos.mao4
     if p1_mao_esquerda_g == 4:
         p1_img_mao_e = Img_Maos.mao4
+
     if p1_mao_direita_g == 5:
         p1_img_mao_d = Img_Maos.mao5
     if p1_mao_esquerda_g == 5:
         p1_img_mao_e = Img_Maos.mao5
+
+    # IMAGEM DAS MÃOS PLAYER 2
     if p2_mao_direita_g == 0:
         p2_img_mao_d = Img_Maos.mao0
     if p2_mao_esquerda_g == 0:
         p2_img_mao_e = Img_Maos.mao0
+
     if p2_mao_direita_g == 1:
         p2_img_mao_d = Img_Maos.mao1
     if p2_mao_esquerda_g == 1:
         p2_img_mao_e = Img_Maos.mao1
+
     if p2_mao_direita_g == 2:
         p2_img_mao_d = Img_Maos.mao2
     if p2_mao_esquerda_g == 2:
         p2_img_mao_e = Img_Maos.mao2
+
     if p2_mao_direita_g == 3:
         p2_img_mao_d = Img_Maos.mao3
     if p2_mao_esquerda_g == 3:
         p2_img_mao_e = Img_Maos.mao3
+
     if p2_mao_direita_g == 4:
         p2_img_mao_d = Img_Maos.mao4
     if p2_mao_esquerda_g == 4:
         p2_img_mao_e = Img_Maos.mao4
+
     if p2_mao_direita_g == 5:
         p2_img_mao_d = Img_Maos.mao5
     if p2_mao_esquerda_g == 5:
         p2_img_mao_e = Img_Maos.mao5
 
+    # Contagem para vez de cada jogador 
     if vez_jogador == 1:
         p1_vez_jogador_nao_jogar = False
         p2_vez_jogador_nao_jogar = True
+
+
+
+    
         if contador_vez == 1:
             p1_vez_jogador_nao_jogar = True
             p2_vez_jogador_nao_jogar = False
@@ -91,6 +109,7 @@ def janela_dois_jogadores():
         if contador_vez == 2:
             vez_jogador = 2
             contador_vez = 0
+
     elif vez_jogador == 2:
         p1_vez_jogador_nao_jogar = True
         p2_vez_jogador_nao_jogar = False
@@ -102,6 +121,7 @@ def janela_dois_jogadores():
             vez_jogador = 1
             contador_vez = 0
 
+    # Posicionamento do quadrado das Mãos
     if p2_mao_esquerda_g == 1:
         p2_me_altura = 170
         p2_me_largura = 140
@@ -191,7 +211,7 @@ def janela_dois_jogadores():
         esp_alto = 1
 
     layout_dois_jogador = [[(sg.Text('', size=[40, esp_alto]))],
-                           [(sg.Text('{}'.format(jogador2), size=[31, 0],
+                           [(sg.Text('{}'.format(jogador2),visible = p1_vez_jogador_nao_jogar, size=[31, 0],
                              justification='r', font='ARIAL 16'))],
                            [sg.Button('', visible=p2_mao_esquerda_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
                             (sg.Text('', size=[20, 0])),
@@ -200,16 +220,16 @@ def janela_dois_jogadores():
                            [sg.Button('', visible=p1_mao_esquerda_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_me_largura, p1_me_altura), border_width=0, key='-p1_me-'),
                             (sg.Text('', size=[20, 0])),
                             sg.Button('', visible=p1_mao_direita_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_md_largura, p1_md_altura), border_width=0, key='-p1_md-')],
-                           [(sg.Text('{}'.format(jogador1), size=[31, 0],
+                           [(sg.Text('{}'.format(jogador1),visible = p2_vez_jogador_nao_jogar ,size=[31, 0],
                              justification='r', font='ARIAL 16'))],
                            [(sg.Text('', size=[40, esp_alto]))]]
 
     layout = [[sg.Column(layout_dois_jogador, justification='c')]]
 
     tela_dois_jogadores = sg.Window(
-        'Um Jogador', layout, size=(800, 900), location=(350, 0))
+        'Game', layout, size=(800, 900), location=(350, 0))
     global contador_jogar, p1_vencedor, p2_vencedor
-    while True:
+    while True: # Fechar quando algum dos jogadores deixar as 2 mãos do adversário desabilitadas
         if p1_mao_esquerda_visivel == False and p1_mao_direita_visivel == False:
             tela_dois_jogadores.close()
             p1_vencedor = True
@@ -223,29 +243,27 @@ def janela_dois_jogadores():
         if event == sg.WIN_CLOSED or event == 'Sair':
             break
 
-        elif event == 'Voltar':
-            tela_dois_jogadores.close()
-            tela_principal()
 
-        if comeco_jogador == 1:
+        if comeco_jogador == 1: # começo_jogador = vez_jogador porque essa variável atribui a vez do jogador de forma que ela não altere o valor contido nela
             contador_jogar += 1
             if contador_jogar <= 2:
                 global p1_mao_esquerda_clicked, p1_mao_direita_clicked, menos_um_dedo
-                if event == '-p1_me-':
-                    p1_mao_esquerda_clicked = True
-                    tela_dois_jogadores.close()
-                    janela_dois_jogadores()
 
-                if event == '-p2_me-' and p1_mao_esquerda_clicked == True:
+                if event == '-p1_me-': #mão esquerda do player 1 -- Se o usuário clicar na mão esquerda do player 1, a mão esquerda vai atribuir como True
+                    p1_mao_esquerda_clicked = True 
+                    tela_dois_jogadores.close() #fecha pra tela recarregar
+                    janela_dois_jogadores() #chama a função para voltar pra tela carregada
+
+                if event == '-p2_me-' and p1_mao_esquerda_clicked == True: # p1 mao clicked é quando a mão já está selecionada
                     p2_mao_esquerda_g += p1_mao_esquerda_g
                     if p1_mao_esquerda_g == 0:
                         p2_mao_esquerda_g += 1
                     if p2_mao_esquerda_g == 5:
-                        p2_mao_esquerda_visivel = False
+                        p2_mao_esquerda_visivel = False #vai se tornar invisível
                     elif p2_mao_esquerda_g > 5:
                         p2_mao_esquerda_g -= 5
                     tela_dois_jogadores.close()
-                    p1_mao_esquerda_clicked = False
+                    p1_mao_esquerda_clicked = False # pra não entrar nessa função de novo
                     janela_dois_jogadores()
 
                 if event == '-p2_md-' and p1_mao_esquerda_clicked == True:
@@ -501,25 +519,6 @@ def nome_jogadores():
             janela_dois_jogadores()
 
 
-def janela_rank():
-    sg.theme('Dark Blue 3')
-
-    layout_rank = [[sg.Button('Voltar', size=(40, 2))],
-                   [sg.Button('Sair', size=(40, 2))]]
-
-    tela_rank = sg.Window('Rank', layout_rank)
-
-    while True:
-        event, values = tela_rank.read()
-        if event == sg.WIN_CLOSED or event == 'Sair':
-            break
-        if event == 'Voltar':
-            tela_rank.close()
-            tela_principal()
-
-    tela_rank.close()
-
-
 def janela_regras():
     sg.theme('dark blue 3')
     col = [[sg.Text('O programa consiste, basicamente, num jogo entre duas pessoas ou uma partida entre um homem e uma máquina em que quem eliminar as duas mãos primeiro, vence.', font="Arial 13")],
@@ -552,17 +551,16 @@ def janela_regras():
 def tela_principal():
     global p1_mao_esquerda_clicked, p1_mao_direita_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, vez_jogador, comeco_jogador, contador_jogar, menos_um_dedo
     p1_mao_direita_clicked, p1_mao_esquerda_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, contador_jogar, menos_um_dedo = False, False, False, False, 0, False
-    vez_jogador = random.randint(1, 2)
+    vez_jogador = random.randint(1, 2) # Para escolher qual jogador vai começar
     comeco_jogador = vez_jogador
 
     sg.theme('dark blue 3')
 
+        # ------------- BOTÕES DA TELA INICIAL -------------
     layout_menu = [[(sg.Text('Jogo das Mãos', size=[60, 1], justification='c', font='courier 65'))],
                    [(sg.Text(' ', size=[40, 5]))],
                    [sg.Button('Dois Jogadores', font='corrier',
-                              size=(50, 5), border_width='8')],
-                   [sg.Button('Rank', font='corrier',
-                              size=(50, 5), border_width='8')],
+                              size=(50, 5), border_width='8')],  #(largura, espessura) 
                    [sg.Button('Regras', font='corrier',
                               size=(50, 5), border_width='8')],
                    [sg.Button('Sair', font='corrier',
@@ -571,8 +569,8 @@ def tela_principal():
         'Joguinho das mãos', layout_menu, element_justification='c', size=(750, 650))
 
     while True:
-        event, values = menu_principal.read()
-        if event == sg.WIN_CLOSED or event == 'Sair':
+        event, values = menu_principal.read()   # Manter a tela aberta
+        if event == sg.WIN_CLOSED or event == 'Sair':  # Criando o botão para fechar a janela
             break
         elif event == 'Dois Jogadores':
             menu_principal.close()
