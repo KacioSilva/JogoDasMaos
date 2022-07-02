@@ -10,38 +10,31 @@ p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_
 def p1_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 1 VENCE O JOGO
     sg.theme('Dark Blue 3')
 
-    p1_layout_tela_vencedor = [[(sg.Text('Vencedor', size=(15,1),justification='c', font='Arial 50'))], #LAYOUT DA TELA DO VENCEDOR
+    p1_layout_tela_vencedor = [[(sg.Text('Vencedor(a):', size=(15,1),justification='c', font='Arial 50'))], #LAYOUT DA TELA DO VENCEDOR
                    [(sg.Text('{}'.format(jogador1), size=(15,1), justification='c', font='Arial 50'))],
                    [(sg.Text('', size=[15, 12]))],
-                   [sg.Button('Voltar Ao Menu', border_width='3', size=(20,7)), sg.Button('Sair', border_width='3', size=(20,7))]]
+                   [sg.Button('Sair', border_width='3', size=(20,7))]]
     p1_tela_vencedor = sg.Window('Jogador Vencedor',p1_layout_tela_vencedor, element_justification='c', size=(500,500), location = (350,0)) #FAZENDO A TELA ABRIR
 
     while True:
         event, values = p1_tela_vencedor.read() #PEGANDO OS EVENTOS E VALORES COLOCADOS NA TELA
         if event == sg.WIN_CLOSED or event == 'Sair': #CONDIÇÃO ONDE SE O USUARIO CLICAR EM "FECHAR" OU NO BOTÃO "SAIR" ACONTECE TAL SITUAÇÃO
-            p1_tela_vencedor.close() #FECHAR A JANELA CASO ESSE EVENTO SEJA OCORRIDO
-            break
-        elif event == 'Voltar Ao Menu':
-            p1_tela_vencedor.close()
-            tela_principal() #VOLTA NA TELA PRINCIPAL
+            quit()
 
 def p2_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 2 VENCE O JOGO
     sg.theme('Dark Blue 3')
 
-    p2_layout_tela_vencedor = [[(sg.Text('Vencedor', size=(15,1), justification='c', font='Arial 50'))],
+    p2_layout_tela_vencedor = [[(sg.Text('Vencedor(a):', size=(15,1), justification='c', font='Arial 50'))],
                    [(sg.Text('{}'.format(jogador2), size=(15,1), justification='c', font='Arial 50'))],
                    [(sg.Text('', size=[15, 12]))],
-                   [sg.Button('Voltar Ao Menu', border_width='3', size=(20,7)), sg.Button('Sair', border_width='3', size=(20,7))]]
+                   [sg.Button('Sair', border_width='3', size=(20,7))]]
     p2_tela_vencedor = sg.Window('Jogador Vencedor', p2_layout_tela_vencedor, element_justification='c', size=(500,500), location = (350,0))
 
     while True:
         event, values = p2_tela_vencedor.read()
         if event == sg.WIN_CLOSED or event == 'Sair':
-            p2_tela_vencedor.close()
-            break
-        elif event == 'Voltar Ao Menu':
-            p2_tela_vencedor.close()
-            tela_principal()
+            quit()
+
 
 def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM DOIS JOGADORES NO MENU PRINCIPAL
 
@@ -242,7 +235,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         event, values = tela_dois_jogadores.read()
 
         if event == sg.WIN_CLOSED:
-            break
+            quit()
 
         if comeco_jogador == 1: #SE QUEM COMEÇAR É O JOGADOR 1 VAI ENTRAR NESSA CONDIÇÃO
             contador_jogar += 1 #CONTADOR PARA ALTERNAR A VEZ DA MAO CLICADA
@@ -507,7 +500,7 @@ def nome_jogadores():
     while True:
         event, values = tela_nome.read()
         if event == sg.WIN_CLOSED:
-            break
+            quit()
         elif event == 'Voltar':
             tela_nome.close()
             tela_principal()
@@ -519,15 +512,14 @@ def nome_jogadores():
 
 def janela_regras():
     sg.theme('dark blue 3')
-    col = [[sg.Text('O programa consiste, basicamente, num jogo entre duas pessoas ou uma partida entre um homem e uma máquina em que quem eliminar as duas mãos primeiro, vence.', font="Arial 13")],
-           [sg.Text('Regra número 1 - O participante que fará a primeira jogada será selecionado aleatoriamente pelo computador;', font="Arial 11")],
-           [sg.Text('Regra número 2 - Quando a mão completar os 5 dedos, essa mão será eliminada do jogo, sem a opção de poder voltar;', font="Arial 11")],
-           [sg.Text('Regra número 3 - Quando a soma entre os dedos for maior do que 5, será feita a diferença entre o total menos 5; o resto será o resultado', font="Arial 11")],
-           [sg.Text(
-               'Regra número 4 - Em hipótese alguma o participante poderá passar a vez sem jogar;', font="Arial 11")],
-           [sg.Text(
-               'Regra número 5 - Ganha aquele que conseguir eliminar as duas mãos do oponente', font="Arial 11")],
-           [sg.Text('Bom jogo! :D''', font="ARIAL 14")]]
+    col = [[sg.Text('O programa consiste, basicamente, num jogo entre duas pessoas cujo objetivo é eliminar as duas mãos do oponente primeiro.', font="Arial 13")],
+           [sg.Text('Regra Número 1 - O participante que fará a primeira jogada será selecionado, aleatoriamente, pelo computador;', font="Arial 11")],
+           [sg.Text('Regra Número 2 - Quando alguma das mãos completar 5 dedos, essa mão será eliminada do jogo, sem a opção de poder voltar;', font="Arial 11")],
+           [sg.Text('Regra Número 3 - Quando a soma entre os dedos for maior do que 5, será feita a diferença entre o total menos 5: o resto será o resultado;', font="Arial 11")],
+           [sg.Text('Regra Número 4 - Em hipótese alguma o participante poderá passar a vez sem jogar;', font="Arial 11")],
+           [sg.Text('Regra Número 5 - Ganha aquele que conseguir eliminar as duas mãos do oponente;', font="Arial 11")],
+            [sg.Text('Regra Número 6 - Uma vez selecionada a mão, não tem mais volta. Pense bem antes de selecionar alguma delas! :D', font="Arial 11")],
+           [sg.Text('Bom jogo! :D', font="ARIAL 14")]]
         
 
     layout_regras = [[sg.Button('Voltar', size=(40, 2)),
@@ -538,7 +530,7 @@ def janela_regras():
     while True:
         event, values = tela_regras.read()
         if event == sg.WIN_CLOSED:
-            break
+            quit()
         if event == 'Voltar':
             tela_regras.close()
             tela_principal()
@@ -553,18 +545,18 @@ def tela_principal():
 
     sg.theme('Dark Blue 3')
 
-    layout_menu = [[(sg.Text('Jogo das Mãos', size=[40, 1], justification='c',font='courier 65'))],
+    layout_menu = [[(sg.Text('Jogo das Mãos', size=[40, 1], justification='c',font='Arial 65'))],
                    [(sg.Text(' ', size=[40, 5]))],
-                   [sg.Button('Dois Jogadores', size=(70, 5), border_width='6')],
-                   [sg.Button('Regras', size=(70, 5), border_width='6')],
-                   [sg.Button('Sair', size=(70, 5), border_width='6')]]
+                   [sg.Button('Dois Jogadores', font='arial, 16' ,size=(40, 3), border_width='6')],
+                   [sg.Button('Regras', font='arial, 16', size=(40, 3), border_width='6')],
+                   [sg.Button('Sair', font='arial, 16' , size=(40, 3), border_width='6')]]
     menu_principal = sg.Window(
         'Joguinho das mãos', layout_menu, element_justification='c', size=(750, 550))
 
     while True:
         event, values = menu_principal.read()
         if event == sg.WIN_CLOSED or event == 'Sair':
-            break
+            quit()
         elif event == 'Dois Jogadores':
             menu_principal.close()
             nome_jogadores()
