@@ -10,7 +10,7 @@ p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_
 def p1_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 1 VENCE O JOGO
     sg.theme('Dark Blue 3')
 
-    p1_layout_tela_vencedor = [[(sg.Text('Vencedor(a):', size=(15,1),justification='c', font='Arial 50'))], #LAYOUT DA TELA DO VENCEDOR
+    p1_layout_tela_vencedor = [[(sg.Text('Vencedor(a):', size=(15,1),justification='c', font='courier 50'))], #LAYOUT DA TELA DO VENCEDOR
                    [(sg.Text('{}'.format(jogador1), size=(15,1), justification='c', font='Arial 50'))],
                    [(sg.Text('', size=[15, 12]))],
                    [sg.Button('Sair', border_width='3', size=(20,7))]]
@@ -24,7 +24,7 @@ def p1_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 1 VENCE O JOGO
 def p2_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 2 VENCE O JOGO
     sg.theme('Dark Blue 3')
 
-    p2_layout_tela_vencedor = [[(sg.Text('Vencedor(a):', size=(15,1), justification='c', font='Arial 50'))],
+    p2_layout_tela_vencedor = [[(sg.Text('Vencedor(a):', size=(15,1), justification='c', font='courier 50'))],
                    [(sg.Text('{}'.format(jogador2), size=(15,1), justification='c', font='Arial 50'))],
                    [(sg.Text('', size=[15, 12]))],
                    [sg.Button('Sair', border_width='3', size=(20,7))]]
@@ -35,7 +35,24 @@ def p2_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 2 VENCE O JOGO
         if event == sg.WIN_CLOSED or event == 'Sair':
             quit()
 
+def empate():
+    sg.theme('Dark Blue 3')
 
+    empate_layout = [[sg.Text('EMPATE!', size=(17,2), justification='c', font='Arial 50')],
+                    [sg.Text('', size=(0,3))],
+                    [sg.Text('Tente novamente!', font='arial 15')],
+                    [sg.Button('Sair', border_width='3', font="arial 15", size=(40,2))]]
+                    
+
+
+    tela_empate = sg.Window('Empate', empate_layout, element_justification='c', size=(500,500), location=(300,0))
+    tela_empate.read()
+
+    while True:
+        event, values = tela_empate.read()
+        if event == sg.WIN_CLOSED or event == 'Sair':
+            quit()
+        
 def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM DOIS JOGADORES NO MENU PRINCIPAL
 
     global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel, p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_direita 
@@ -207,7 +224,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         esp_alto = 1
     
     layout_dois_jogador = [[(sg.Text('', size=[40, esp_alto]))], #LAYOUT DA TELA DE DOIS JOGADORES
-                            [(sg.Text('Vez de: {}'.format(jogador2),visible=p2_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
+                            [(sg.Text('Jogador: {}'.format(jogador2),visible=p2_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
                            [sg.Button('',visible=p2_mao_esquerda_visivel ,disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
                             (sg.Text('', size=[20, 0])),
                             sg.Button('',visible=p2_mao_direita_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_md_largura, p2_md_altura), border_width=0, key='-p2_md-')],
@@ -215,7 +232,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                            [sg.Button('',visible=p1_mao_esquerda_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_me_largura, p1_me_altura), border_width=0, key='-p1_me-'),
                             (sg.Text('', size=[20, 0])),
                             sg.Button('',visible=p1_mao_direita_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_md_largura, p1_md_altura), border_width=0, key='-p1_md-')],
-                            [(sg.Text('Vez de: {}'.format(jogador1),visible=p1_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
+                            [(sg.Text('Jogador: {}'.format(jogador1),visible=p1_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
                            [(sg.Text('', size=[40, esp_alto]))]]
 
     layout = [[sg.Column(layout_dois_jogador, justification='c')]]
@@ -226,7 +243,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
 
     while True: #LAÇO DE REPETIÇÃO SOBRE OS EVENTOS
 
-        if p1_mao_esquerda_visivel == False and p1_mao_direita_visivel == False: #CONDIÇÃO CASO AS DUAS MÃOS DO PLAYER 1 ESTIVEREM DESATIVADAS  
+        if p1_mao_esquerda_visivel == False and p1_mao_direita_visivel == False: #CONDIÇÃO VENCEDOR 
             tela_dois_jogadores.close()
             p2_vencedor() #ABRE A TELA DO JOGADOR 2 QUE VAI SER O VENCEDOR
         elif p2_mao_esquerda_visivel == False and p2_mao_direita_visivel == False:
@@ -236,6 +253,44 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
 
         if event == sg.WIN_CLOSED:
             quit()
+   #-----------------------------------------------------------------------  CONDIÇÃO DE EMPATE   p1_mao_direita_g == 0 p1_mao_direita_g
+        if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 2 and p2_mao_direita_g == 4:
+            tela_dois_jogadores.close()
+            empate()
+        if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 4 and p2_mao_esquerda_g == 2:
+            tela_dois_jogadores.close()
+            empate()
+
+        if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 2 and p2_mao_direita_g == 4:
+            tela_dois_jogadores.close()
+            empate()
+        if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 4 and p2_mao_direita_g == 2:
+            tela_dois_jogadores.close()
+            empate()
+
+        if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 4 and p2_mao_direita_g == 2:
+            tela_dois_jogadores.close()
+            empate()
+        if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 2 and p2_mao_direita_g == 4:
+            tela_dois_jogadores.close()
+            empate()
+
+        if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 4 and p2_mao_esquerda_g == 2:
+            tela_dois_jogadores.close()
+            empate()
+        if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 2 and p2_mao_esquerda_g == 4:
+            tela_dois_jogadores.close()
+            empate()
+
+        
+
+        
+
+       
+        
+    
+    
+
 
         if comeco_jogador == 1: #SE QUEM COMEÇAR É O JOGADOR 1 VAI ENTRAR NESSA CONDIÇÃO
             contador_jogar += 1 #CONTADOR PARA ALTERNAR A VEZ DA MAO CLICADA
@@ -483,7 +538,6 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                     janela_dois_jogadores()
 
     tela_dois_jogadores.close()
-
 
 def nome_jogadores():
     global jogador1, jogador2
