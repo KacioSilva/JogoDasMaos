@@ -35,7 +35,7 @@ def p2_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 2 VENCE O JOGO
         if event == sg.WIN_CLOSED or event == 'Sair':
             quit()
 
-def empate():
+def empate(): #FUNÇÃO A SER CHAMADA QUANDO ACONTECE O EMPATE
     sg.theme('Dark Blue 3')
 
     empate_layout = [[sg.Text('EMPATE!', size=(17,2), justification='c', font='Arial 50')],
@@ -110,6 +110,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
 
     global p1_nome_visivel, p2_nome_visivel
 
+#alternar as vezes dos jogadores
     if vez_jogador == 1: #CONDIÇÃO SOBRE QUEM VAI SER A VEZ DE JOGAR, NESTA CONDIÇÃO VAI SER O JOGADOR 1
         p1_nome_visivel = True #VARIÁVEL PARA COLOCAR SE O NOME VAI FICAR INVISIVEL PARA DETERMINAR QUEM VAI SER A VEZ DE JGOAR
         p2_nome_visivel = False 
@@ -136,7 +137,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
             contador_vez = 0
 
     if p2_mao_esquerda_g == 1: #CONDIÇÕES PARA AJUSTAR A LARGURA E ALTURA DO BOTAO DE ACORDO COM A IMAGEM A SER COLOCADA
-        p2_me_altura = 170
+        p2_me_altura = 170 
         p2_me_largura = 140
         esp_meio = 1
         esp_alto = 3
@@ -253,7 +254,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
 
         if event == sg.WIN_CLOSED:
             quit()
-   #-----------------------------------------------------------------------  CONDIÇÃO DE EMPATE   p1_mao_direita_g == 0 p1_mao_direita_g
+   #-----------------------------------------------------------------------  CONDIÇÃO DE EMPATE   
         if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 2 and p2_mao_direita_g == 4:
             tela_dois_jogadores.close()
             empate()
@@ -284,25 +285,19 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
 
         
 
-        
-
-       
-        
-    
-    
-
+        #EVENTO DOS CLIQUES 
 
         if comeco_jogador == 1: #SE QUEM COMEÇAR É O JOGADOR 1 VAI ENTRAR NESSA CONDIÇÃO
             contador_jogar += 1 #CONTADOR PARA ALTERNAR A VEZ DA MAO CLICADA
             if contador_jogar <= 2:
                 global p1_mao_esquerda_clicked, p1_mao_direita_clicked, menos_um_dedo
-                if event == '-p1_me-':
+                if event == '-p1_me-': #se a mão escolhida foi a mão ESQUERDA
                     p1_mao_esquerda_clicked = True
                     tela_dois_jogadores.close()
                     janela_dois_jogadores()
 
-                if event == '-p2_me-' and p1_mao_esquerda_clicked == True:
-                    p2_mao_esquerda_g += p1_mao_esquerda_g
+                if event == '-p2_me-' and p1_mao_esquerda_clicked == True: #SELECIONO A MÃO QUE EU QUERO SOMAR
+                    p2_mao_esquerda_g += p1_mao_esquerda_g 
                     if p1_mao_esquerda_g == 0:
                         p2_mao_esquerda_g+=1
                     if p2_mao_esquerda_g == 5:
@@ -313,7 +308,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                     p1_mao_esquerda_clicked = False
                     janela_dois_jogadores()
 
-                if event == '-p2_md-' and p1_mao_esquerda_clicked == True:
+                if event == '-p2_md-' and p1_mao_esquerda_clicked == True: #SELECIONO A MÃO QUE EU QUERO SOMAR 
                     p2_mao_direita_g += p1_mao_esquerda_g
                     if p1_mao_esquerda_g == 0:
                         p2_mao_direita_g+=1
@@ -329,7 +324,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                     p1_mao_direita_clicked = True
                     tela_dois_jogadores.close()
                     janela_dois_jogadores()
-
+                                                                #A MESMA COISA SÓ QUE COM A MÃO DIREITA
                 if event == '-p2_me-' and p1_mao_direita_clicked == True:
                     p2_mao_esquerda_g += p1_mao_direita_g
                     if p1_mao_direita_g == 0:
@@ -353,7 +348,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                     tela_dois_jogadores.close()
                     p1_mao_direita_clicked = False
                     janela_dois_jogadores()
-                
+                                                
             elif contador_jogar >= 3 and contador_jogar <= 4:
                 if contador_jogar == 4:
                     contador_jogar = 0
