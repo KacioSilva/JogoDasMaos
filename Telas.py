@@ -5,7 +5,7 @@ import Img_Maos, random #IMPORTANDO ALGUMAS BIBLIOTECAS/OUTROS ARQUIVOS
 
 p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez = 0, 0, 0, 0, 1, 0 #DECLARAÇÃO DE VARIÁVEIS A SER UTILIZADOS NO CÓDIGO
 p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel = True, True, True, True #DECLARAÇÃO DE VARIÁVEIS A SER UTILIZADOS NO CÓDIGO
-p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_direita, p1_vencedor, p2_vencedor = False, False, False, False, False, False #DECLARAÇÃO DE VARIÁVEIS A SER UTILIZADOS NO CÓDIGO
+
 
 def p1_vencedor(): #FUNÇÃO A SER CHAMADA QUANDO O JOGADOR 1 VENCE O JOGO
     sg.theme('Dark Blue 3')
