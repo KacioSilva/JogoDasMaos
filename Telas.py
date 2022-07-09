@@ -256,47 +256,47 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
             quit()
 #-----------------------------------------------------------------------  CONDIÇÃO DE EMPATE PLAYER 1 
         if vez_jogador == 1:
-            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_esquerda_g == 2:
+            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 3 and p2_mao_esquerda_g == 1:
                 tela_dois_jogadores.close()
                 empate()
     
 
-            if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 1 and p2_mao_direita_g == 2:
+            if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 3 and p2_mao_direita_g == 1:
                 tela_dois_jogadores.close()
                 empate()
 
         
 
 
-            if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_direita_g == 2:
+            if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 3 and p2_mao_direita_g == 1:
                 tela_dois_jogadores.close()
                 empate()
 
 
-            if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 1 and p2_mao_esquerda_g == 2:
+            if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 3 and p2_mao_esquerda_g == 1:
                 tela_dois_jogadores.close()
                 empate()
         
 #----------------------------------------------------------------------  CONDIÇÃO DE EMPATE PLAYER 2
-        if vez_jogador == 2:
-            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 2 and p2_mao_esquerda_g == 1:
+        elif vez_jogador == 2:
+            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_esquerda_g == 3:
                 tela_dois_jogadores.close()
                 empate()
     
 
-            if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 2 and p2_mao_direita_g == 1:
+            if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 1 and p2_mao_direita_g == 3:
                 tela_dois_jogadores.close()
                 empate()
 
         
 
 
-            if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 2 and p2_mao_direita_g == 1:
+            if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_direita_g == 3:
                 tela_dois_jogadores.close()
                 empate()
 
 
-            if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 2 and p2_mao_esquerda_g == 1:
+            if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 1 and p2_mao_esquerda_g == 3:
                 tela_dois_jogadores.close()
                 empate()
 
