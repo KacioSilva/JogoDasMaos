@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-import Img_Maos
 import Img_Maos, random #IMPORTANDO ALGUMAS BIBLIOTECAS/OUTROS ARQUIVOS
 
 
@@ -136,62 +135,20 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
             vez_jogador = 1
             contador_vez = 0
 
-    if p2_mao_esquerda_g == 1: #CONDIÇÕES PARA AJUSTAR A LARGURA E ALTURA DO BOTAO DE ACORDO COM A IMAGEM A SER COLOCADA
-        p2_me_altura = 170 
-        p2_me_largura = 140
-        esp_meio = 1
-        esp_alto = 3
-    else:
-        p2_me_altura = 350
-        p2_me_largura = 140
-        esp_meio = 1
-        esp_alto = 1
-
-    if p2_mao_direita_g == 1:
-        p2_md_altura = 170
-        p2_md_largura = 140
-        esp_meio = 1
-        esp_alto = 3
-    else:
-        p2_md_altura = 350
-        p2_md_largura = 140
-        esp_meio = 1
-        esp_alto = 1
-
+    
+        
     if p1_mao_esquerda_g == 1:
-        p1_me_altura = 170
-        p1_me_largura = 140
+        p1_me_altura = 350
+        p1_me_largura = 245
         esp_meio = 1
         esp_alto = 3
     else:
         p1_me_altura = 350
-        p1_me_largura = 140
+        p1_me_largura = 245
         esp_meio = 1
         esp_alto = 1
 
     if p1_mao_direita_g == 1:
-        p1_md_altura = 170
-        p1_md_largura = 140
-        esp_meio = 1
-        esp_alto = 3
-    else:
-        p1_md_altura = 350
-        p1_md_largura = 140
-        esp_meio = 1
-        esp_alto = 1
-
-    if p1_mao_esquerda_g == 6:
-        p1_me_altura = 350
-        p1_me_largura = 245
-        esp_meio = 1
-        esp_alto = 3
-    else:
-        p1_me_altura = 350
-        p1_me_largura = 245
-        esp_meio = 1
-        esp_alto = 1
-
-    if p1_mao_direita_g == 6:
         p1_md_altura = 350
         p1_md_largura = 245
         esp_meio = 1
@@ -200,9 +157,9 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         p1_md_altura = 350
         p1_md_largura = 245
         esp_meio = 1
-        esp_alto = 1
+        esp_alto = 1 
 
-    if p2_mao_esquerda_g == 6:
+    if p2_mao_esquerda_g == 1:
         p2_me_altura = 350
         p2_me_largura = 245
         esp_meio = 1
@@ -213,7 +170,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         esp_meio = 1
         esp_alto = 1
 
-    if p2_mao_direita_g == 6:
+    if p2_mao_direita_g == 1 :
         p2_md_altura = 350
         p2_md_largura = 245
         esp_meio = 1
@@ -223,7 +180,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         p2_md_largura = 245
         esp_meio = 1
         esp_alto = 1
-    
+        
     layout_dois_jogador = [[(sg.Text('', size=[40, esp_alto]))], #LAYOUT DA TELA DE DOIS JOGADORES
                             [(sg.Text('Jogador: {}'.format(jogador2),visible=p2_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
                            [sg.Button('',visible=p2_mao_esquerda_visivel ,disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
@@ -310,7 +267,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         if comeco_jogador == 1: #SE QUEM COMEÇAR É O JOGADOR 1 VAI ENTRAR NESSA CONDIÇÃO
             contador_jogar += 1 #CONTADOR PARA ALTERNAR A VEZ DA MAO CLICADA
             if contador_jogar <= 2:
-                global p1_mao_esquerda_clicked, p1_mao_direita_clicked, menos_um_dedo
+                global p1_mao_esquerda_clicked, p1_mao_direita_clicked
                 if event == '-p1_me-': #se a mão escolhida foi a mão ESQUERDA
                     p1_mao_esquerda_clicked = True
                     tela_dois_jogadores.close()
@@ -607,8 +564,9 @@ def janela_regras():
     tela_regras.close()
 
 def tela_principal():
-    global p1_mao_esquerda_clicked, p1_mao_direita_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, vez_jogador, comeco_jogador, contador_jogar, menos_um_dedo
-    p1_mao_direita_clicked, p1_mao_esquerda_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, contador_jogar, menos_um_dedo = False, False, False, False, 0, False
+    global p1_mao_esquerda_clicked, p1_mao_direita_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, vez_jogador, comeco_jogador, contador_jogar
+    p1_mao_direita_clicked, p1_mao_esquerda_clicked, p2_mao_direita_clicked, p2_mao_esquerda_clicked, contador_jogar = False, False, False, False, 0
+    
     vez_jogador = random.randint(1, 2)
     comeco_jogador = vez_jogador
 
