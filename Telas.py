@@ -54,7 +54,7 @@ def empate(): #FUNÇÃO A SER CHAMADA QUANDO ACONTECE O EMPATE
         
 def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM DOIS JOGADORES NO MENU PRINCIPAL
 
-    global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel, p1m_dedo_mao_esquerda, p1m_dedo_mao_direita,p2m_dedo_mao_esquerda, p2m_dedo_mao_direita 
+    global p1_mao_direita_g, p1_mao_esquerda_g, p2_mao_direita_g, p2_mao_esquerda_g, vez_jogador, contador_vez, p2_mao_esquerda_visivel, p2_mao_direita_visivel, p1_mao_esquerda_visivel, p1_mao_direita_visivel
 
     sg.theme('bluemono')
 
@@ -136,7 +136,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
             contador_vez = 0
 
     
-        
+        #condição para alterar o tamanho do botão 
     if p1_mao_esquerda_g == 1:
         p1_me_altura = 350
         p1_me_largura = 245
@@ -183,13 +183,13 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
         
     layout_dois_jogador = [[(sg.Text('', size=[40, esp_alto]))], #LAYOUT DA TELA DE DOIS JOGADORES
                             [(sg.Text('Jogador: {}'.format(jogador2),visible=p2_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
-                           [sg.Button('',visible=p2_mao_esquerda_visivel ,disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
+                           [sg.Button('',visible=p2_mao_esquerda_visivel ,disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_e, button_color=(sg.theme_background_color()), image_size=(p2_me_largura, p2_me_altura), border_width=0, key='-p2_me-'),
                             (sg.Text('', size=[20, 0])),
-                            sg.Button('',visible=p2_mao_direita_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p2_md_largura, p2_md_altura), border_width=0, key='-p2_md-')],
+                            sg.Button('',visible=p2_mao_direita_visivel, disabled=p2_vez_jogador_nao_jogar, image_data=p2_img_mao_d, button_color=(sg.theme_background_color()), image_size=(p2_md_largura, p2_md_altura), border_width=0, key='-p2_md-')],
                            [(sg.Text('', size=[40, esp_meio]))],
-                           [sg.Button('',visible=p1_mao_esquerda_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_e, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_me_largura, p1_me_altura), border_width=0, key='-p1_me-'),
+                           [sg.Button('',visible=p1_mao_esquerda_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_e, button_color=(sg.theme_background_color()), image_size=(p1_me_largura, p1_me_altura), border_width=0, key='-p1_me-'),
                             (sg.Text('', size=[20, 0])),
-                            sg.Button('',visible=p1_mao_direita_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_d, button_color=(sg.theme_background_color(), sg.theme_background_color()), image_size=(p1_md_largura, p1_md_altura), border_width=0, key='-p1_md-')],
+                            sg.Button('',visible=p1_mao_direita_visivel, disabled=p1_vez_jogador_nao_jogar, image_data=p1_img_mao_d, button_color=(sg.theme_background_color()), image_size=(p1_md_largura, p1_md_altura), border_width=0, key='-p1_md-')],
                             [(sg.Text('Jogador: {}'.format(jogador1),visible=p1_nome_visivel, size=[31, 0], justification='r', font='ARIAL 16'))],
                            [(sg.Text('', size=[40, esp_alto]))]]
 
@@ -213,57 +213,49 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
             quit()
 #-----------------------------------------------------------------------  CONDIÇÃO DE EMPATE PLAYER 1 
         if vez_jogador == 1:
-            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 3 and p2_mao_esquerda_g == 1:
+            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 3 and p2_mao_esquerda_g == 1:   
                 tela_dois_jogadores.close()
                 empate()
-    
-
-            if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 3 and p2_mao_direita_g == 1:
-                tela_dois_jogadores.close()
-                empate()
-
-        
-
-
-            if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 3 and p2_mao_direita_g == 1:
+            
+            elif p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 3 and p2_mao_direita_g == 4:
                 tela_dois_jogadores.close()
                 empate()
 
-
-            if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 3 and p2_mao_esquerda_g == 1:
+            elif p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 2 and p2_mao_direita_g == 1:              
                 tela_dois_jogadores.close()
                 empate()
+
+            elif p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 3 and p2_mao_esquerda_g == 1:             
+                tela_dois_jogadores.close()
+                empate()
+
+
         
 #----------------------------------------------------------------------  CONDIÇÃO DE EMPATE PLAYER 2
         elif vez_jogador == 2:
-            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_esquerda_g == 3:
+            if p1_mao_direita_visivel == False and p2_mao_direita_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_esquerda_g == 3:          
                 tela_dois_jogadores.close()
                 empate()
-    
-
-            if p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 1 and p2_mao_direita_g == 3:
-                tela_dois_jogadores.close()
-                empate()
-
         
-
-
-            if p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_direita_g == 3:
+            elif p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 1 and p2_mao_direita_g == 3:      
+                tela_dois_jogadores.close()
+                empate()
+           
+            elif p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 2 and p2_mao_direita_g == 1:
                 tela_dois_jogadores.close()
                 empate()
 
-
-            if p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 1 and p2_mao_esquerda_g == 3:
+            elif p1_mao_esquerda_visivel == False and p2_mao_direita_visivel == False and p1_mao_direita_g == 1 and p2_mao_esquerda_g == 3:       
                 tela_dois_jogadores.close()
                 empate()
-
+               
+            
 
        
 
         
 
         #EVENTO DOS CLIQUES 
-
         if comeco_jogador == 1: #SE QUEM COMEÇAR É O JOGADOR 1 VAI ENTRAR NESSA CONDIÇÃO
             contador_jogar += 1 #CONTADOR PARA ALTERNAR A VEZ DA MAO CLICADA
             if contador_jogar <= 2:
@@ -330,6 +322,7 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                 if contador_jogar == 4:
                     contador_jogar = 0
                 global p2_mao_esquerda_clicked, p2_mao_direita_clicked
+
                 if event == '-p2_me-':
                     p2_mao_esquerda_clicked = True
                     tela_dois_jogadores.close()
@@ -587,7 +580,6 @@ def tela_principal():
         elif event == 'Dois Jogadores':
             menu_principal.close()
             nome_jogadores()
-            janela_dois_jogadores()
         elif event == 'Regras':
             menu_principal.close()
             janela_regras()
