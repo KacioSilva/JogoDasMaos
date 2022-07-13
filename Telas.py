@@ -217,11 +217,11 @@ def janela_dois_jogadores(): #FUNÇÃO A SER CHAMADA QUANDO O USUARIO CLICA EM D
                 tela_dois_jogadores.close()
                 empate()
             
-            elif p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 3 and p2_mao_direita_g == 4:
+            elif p1_mao_esquerda_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_direita_g == 4 and p2_mao_direita_g == 3:
                 tela_dois_jogadores.close()
                 empate()
 
-            elif p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 2 and p2_mao_direita_g == 1:              
+            elif p1_mao_direita_visivel == False and p2_mao_esquerda_visivel == False and p1_mao_esquerda_g == 1 and p2_mao_direita_g == 2:              
                 tela_dois_jogadores.close()
                 empate()
 
